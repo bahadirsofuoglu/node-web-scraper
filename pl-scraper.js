@@ -9,6 +9,30 @@ axios(url)
     const html = response.data
     const $ = cheerio.load(html)
     const statsTable = $('.statsTableContainer > tr')
-    console.log(statsTable.length)
+    const topPremierLeagueScorers = []
+
+    statsTable.each(function () {
+      const rank = $(this)
+        .find('.rank > strong')
+        .text()
+      const playerName = $(this)
+        .find('.playerName > strong')
+        .text()
+      const nationality = $(this)
+        .find('.playerCountry')
+        .text()
+      const goals = $(this)
+        .find('.mainStat')
+        .text()
+
+      topPremierLeagueScorers.push({
+        rank,
+        name: playerName,
+        nationality,
+        goals
+      })
+    })
+
+    console.log(topPremierLeagueScorers)
   })
   .catch(console.error)
